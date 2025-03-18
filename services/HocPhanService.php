@@ -24,14 +24,9 @@ class HocPhanService {
     }
 
     public function decreaseQuantity($maHP) {
-        // Lấy thông tin học phần để biết SoTinChi
-        $hp = $this->getById($maHP);
-        if ($hp && $hp['SoLuongDuKien'] >= $hp['SoTinChi']) {
-            $query = "UPDATE HocPhan SET SoLuongDuKien = SoLuongDuKien - :SoTinChi WHERE MaHP = :MaHP";
-            $stmt = $this->db->prepare($query);
-            return $stmt->execute(['MaHP' => $maHP, 'SoTinChi' => $hp['SoTinChi']]);
-        }
-        return false; // Không giảm nếu số lượng không đủ
+        $query = "UPDATE HocPhan SET SoLuongDuKien = SoLuongDuKien - 1 WHERE MaHP = :MaHP AND SoLuongDuKien > 0";
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute(['MaHP' => $maHP]);
     }
 }
 ?>

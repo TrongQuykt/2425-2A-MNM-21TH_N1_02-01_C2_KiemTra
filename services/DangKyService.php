@@ -19,9 +19,7 @@ class DangKyService {
 
             $hocPhanService = new HocPhanService();
             foreach ($hocPhans as $maHP) {
-                if (!$hocPhanService->decreaseQuantity($maHP)) {
-                    throw new Exception("Số lượng dự kiến không đủ cho học phần $maHP");
-                }
+                $hocPhanService->decreaseQuantity($maHP);
                 $query = "INSERT INTO ChiTietDangKy (MaDK, MaHP) VALUES (:MaDK, :MaHP)";
                 $stmt = $this->db->prepare($query);
                 $stmt->execute(['MaDK' => $maDK, 'MaHP' => $maHP]);
